@@ -9,9 +9,10 @@ fi
 EMAIL_CONTENTS="Subject: Avengers On Sale!\n\n$URL"
 EMAIL_RECIPIENT="j.belleville.richard@gmail.com"
 INTERVAL=10
+MOVIE_REGEX='avengers.*endgame'
 
 while true; do
-    curl -s "$URL" | grep -i "endgame" && \
+    curl -s "$URL" | egrep -i "<h2 data-reactid=.*>.*${MOVIE_REGEX}.*</h2>" && \
     printf "$EMAIL_CONTENTS" | sendmail -v $EMAIL_RECIPIENT && \
     break
 
