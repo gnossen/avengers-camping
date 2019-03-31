@@ -18,8 +18,8 @@ def get_title(film_div):
 
 def get_showtimes(showtimes_section):
     showtime_elems = showtimes_section.find_all(class_='Showtime')
-    return tuple(Showtime.from_elem(showtime_elem) for showtime_elem in
-            showtime_elems)
+    return tuple(
+        Showtime.from_elem(showtime_elem) for showtime_elem in showtime_elems)
 
 
 def get_films(page_text):
@@ -31,6 +31,7 @@ def get_films(page_text):
         showtimes_sections = film_div.find_all(class_='Showtimes-Section')
         films[film_title] = {}
         for showtimes_section in showtimes_sections:
-            showtime_type = showtimes_section.find('h4', class_='txt--uppercase').text
+            showtime_type = showtimes_section.find(
+                'h4', class_='txt--uppercase').text
             films[film_title][showtime_type] = get_showtimes(showtimes_section)
     return films

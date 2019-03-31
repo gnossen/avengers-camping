@@ -16,8 +16,7 @@ CAMP_INTERVAL = datetime.timedelta(seconds=10)
 
 
 def is_avengers_title(title):
-    return ('avengers' in title.lower() and
-            'endgame' in title.lower())
+    return ('avengers' in title.lower() and 'endgame' in title.lower())
 
 
 def is_available(showtime):
@@ -41,13 +40,17 @@ def is_avengers_on_sale(films):
 
 PARSER = argparse.ArgumentParser(description='Camp for Avengers Endgame')
 PARSER.add_argument('email', help='The email address to send mail to.')
-PARSER.add_argument('filepath', help='An HTML file to load for testing.', nargs='?', default=None)
+PARSER.add_argument(
+    'filepath',
+    help='An HTML file to load for testing.',
+    nargs='?',
+    default=None)
 
 
 def download_page():
-        page_resp = requests.get(URL)
-        page_resp.raise_for_status()
-        return page_resp.text
+    page_resp = requests.get(URL)
+    page_resp.raise_for_status()
+    return page_resp.text
 
 
 def load_page_from_filesystem(path):
@@ -76,7 +79,10 @@ def send_email(email):
     email_content = 'Subject: {}\n\n{}'.format(subject, body).encode('ascii')
     with tempfile.TemporaryFile(mode='r') as stdout:
         with tempfile.TemporaryFile(mode='r') as stderr:
-            email_process = subprocess.Popen(('sendmail', '-v', email), stdin=subprocess.PIPE, stdout=stdout, stderr=stderr)
+            email_process = subprocess.Popen(('sendmail', '-v', email),
+                                             stdin=subprocess.PIPE,
+                                             stdout=stdout,
+                                             stderr=stderr)
             email_process.communicate(input=email_content)
             stdout.seek(0)
             stderr.seek(0)
