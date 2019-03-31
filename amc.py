@@ -17,7 +17,6 @@ def get_title(film_div):
 
 
 def get_showtimes(showtimes_section):
-    showtimes = []
     showtime_elems = showtimes_section.find_all(class_='Showtime')
     return tuple(Showtime.from_elem(showtime_elem) for showtime_elem in
             showtime_elems)
